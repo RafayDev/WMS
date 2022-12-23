@@ -12,10 +12,10 @@
       </li>
       <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false" >
-                     Products
+                     Inventory
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="/add-product">
                         Add Products
                   </a>
                   <a class="dropdown-item" href="#">

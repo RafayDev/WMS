@@ -22,7 +22,8 @@
     <script type="text/javascript" src="{{asset('frontend/js/jquery.validate.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('frontend/js/jquery.multiselect.js')}}"></script>
     <script type="text/javascript" src="{{asset('frontend/js/additional-methods.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('frontend/dist/min/dropzone.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('frontend/dropzone/min/dropzone.min.js')}}"></script>
+    <script src="{{asset('frontend/tinymce/js/tinymce/tinymce.min.js')}}"></script>
     <script type="text/javascript">
         jQuery.validator.setDefaults({
             errorElement: 'span',
@@ -61,12 +62,15 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
 
+
+
+
     <!-- Styles -->
     <link href="{{ asset('frontend\css\bootstrap5.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend\css\fontawesome\css\all.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend\css\jquery.multiselect.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend\css\countrypicker\css\flags') }}" rel="stylesheet">
-    <link href="{{ asset('frontend\dist\min\dropzone.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend\dropzone\min\dropzone.min.css') }}" rel="stylesheet">
     
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -74,6 +78,8 @@
   <link rel="stylesheet" href={{asset('frontend/plugins/fontawesome-free/css/all.min.css')}}>
   <-- Theme style -->
 </head>
+<style>
+    </style>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -130,7 +136,9 @@
             </div>
         </nav>
         @if(!empty(Auth::user()))
+        <div class="mt-1">
         @include('layouts.navbar')
+        </div>
         @endif
         
 
@@ -139,4 +147,5 @@
         </main>
     </div>
 </body>
+@yield('script')
 </html>
