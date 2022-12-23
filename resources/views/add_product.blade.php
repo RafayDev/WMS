@@ -24,7 +24,7 @@
         <div class='col-md-8'>
             <h4> Add Product Here</h4>
             <div class='mt-3'>
-                <form action="/add-product" method="POST">
+            <form id="addProductform" enctype="multipart/form-data" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="product_name"><b>Title:</b></label>
@@ -51,7 +51,7 @@
                         <div class='col-md-3'>
                             <div class="form-group">
                                 <label for="condition"><b>Condition:</b></label>
-                                <select class="form-control mt-2" style="background-color:#FAFAFA;">
+                                <select class="form-control mt-2"  id='condition' name="condition" style="background-color:#FAFAFA;">
                                     <option value="New">New</option>
                                     <option value="Used">Used</option>
                                     <option value="Broken">Broken</option>
@@ -119,11 +119,11 @@
                         <div class='col-md-9'></div>
                     </div>
                     <div class="border-top my-3"></div>
-                    <label for="description"><b>Description:</b></label>
-                    <textarea class='mt-2' id="description" name="description"></textarea>
+                    <label for="description" class='mt-2'><b>Description:</b></label>
+                    <textarea id="content" name="content"></textarea>
                     <div class="border-top my-3 mt-5"></div>
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="primary"><b>Add Product</b></button>
+                        <button id="submit" name="submit" type='submit' class="primary"><b>Add Product</b></button>
                     </div>
                 </form>
             </div>
@@ -138,15 +138,10 @@ Dropzone.options.images = {
     headers: {
         'X-CSRF-TOKEN': $('meta[name="token"]').attr('content')
     },
-    url: '/upload',
+    url: '/addProduct',
     method: 'post',
     autoProcessQueue: false,
     uploadMultiple: true,
-    renameFile: function(file) {
-        var dt = new Date();
-        var time = dt.getTime();
-        return time + file.name;
-    },
     parallelUploads: 10,
     maxFiles: 12,
     maxFilesize: 10,
@@ -155,36 +150,58 @@ Dropzone.options.images = {
     key: "submitRequest",
     init: function() {
         dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
-        this.on("complete", function(file) {
-            location.reload();
-        });
+        
         // for Dropzone to process the queue (instead of default form behavior):
         document.getElementById("submit").addEventListener("click", function(e) {
             // Make sure that the form isn't actually being sent.
+            // get tiny mce editot Data
+            // var content = tinyMCE.activeEditor.getContent();
+            // console.log(content);
+            // console.log(content);
             e.preventDefault();
             e.stopPropagation();
             dzClosure.processQueue();
         });
         //send all the form data along with the files:
         this.on("sendingmultiple", function(data, xhr, formData) {
-            formData.append("_token", jQuery("[name=_token]").val());
-            formData.append("title", jQuery("#title").val());
-            formData.append("description", jQuery("#description").val());
-            formData.append("start-date", jQuery("#start-date").val());
-            formData.append("category", jQuery("#category").val());
-            formData.append("end-date", jQuery("#end-date").val());
-            formData.append("infinity", jQuery("#infinity").val());
-            formData.append("scope", jQuery("#scope").val());
-            formData.append("team", jQuery("#team").val());
-            formData.append("member", jQuery("#member").val());
-
+            formData.append("_token", "{{ csrf_token() }}");
+            formData.append("title", $('#title').val());
+            formData.append("description", tinyMCE.activeEditor.getContent());
+            formData.append("sku", $('#sku').val());
+            formData.append("upc", $('#upc').val());
+            formData.append("condition", $('#condition').val());
+            formData.append("category", $('#category').val());
+            formData.append("brand", $('#brand').val());
+            formData.append("price", $('#price').val());
+            formData.append("quantity", $('#quantity').val());
+            formData.append("shipping_cost", $('#shiping_cost').val());
+        });
+        //after sucess
+        this.on("successmultiple", function(files, response) {
+            console.log(response);
+            // clear form Data
+            $('#title').val('');
+            $('#sku').val('');
+            $('#upc').val('');
+            $('#condition').val('');
+            $('#category').val('');
+            $('#brand').val('');
+            $('#price').val('');
+            $('#quantity').val('');
+            $('#shiping_cost').val('');
+            tinyMCE.activeEditor.setContent('');
+            // clear dropzone
+            this.removeAllFiles(true);
+            toastr.success("Product added sucessfully<br><a href='/home'>Go to Inventory</a>");
+            //reload page
+            // location.reload();
 
         });
     }
 }
 tinymce.init({
-    selector: 'textarea#description',
-    plugins: "table pagebreak preview print fullpage emoticons spellchecker image imagetools anchor wordcount lists",
+    selector: 'textarea#content',
+    plugins: "table pagebreak preview emoticons anchor wordcount lists",
     toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
 });
 </script>

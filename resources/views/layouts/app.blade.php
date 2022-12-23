@@ -68,8 +68,6 @@
     <!-- Styles -->
     <link href="{{ asset('frontend\css\bootstrap5.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend\css\fontawesome\css\all.css') }}" rel="stylesheet">
-    <link href="{{ asset('frontend\css\jquery.multiselect.css') }}" rel="stylesheet">
-    <link href="{{ asset('frontend\css\countrypicker\css\flags') }}" rel="stylesheet">
     <link href="{{ asset('frontend\dropzone\min\dropzone.min.css') }}" rel="stylesheet">
     
   <!-- Google Font: Source Sans Pro -->
@@ -143,6 +141,7 @@
         
 
         <main class="py-4">
+            @include('toastr')
             @yield('content')
         </main>
     </div>
