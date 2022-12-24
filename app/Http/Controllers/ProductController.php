@@ -104,6 +104,6 @@ class ProductController extends Controller
         $product->shipping_cost = $request->shipping_cost;
         $product->description = $request->content;
         $product->save();
-        return redirect()->back()->with('success', 'Product updated successfully.');
+        return redirect()->back()->with('success', 'Product updated successfully.<br> <a href="/list-products">Go to Inventory</a>');
     }
 }
