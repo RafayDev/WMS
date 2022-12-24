@@ -131,7 +131,7 @@
                         <div class='col-md-3'>
                             <div class="form-group">
                                 <label for="shiping_cost"><b>Shipping Cost ($):</b></label>
-                                <input type="number" class="form-control mt-2" id="shiping_cost" name="shiping_cost"
+                                <input type="number" class="form-control mt-2" id="shipping_cost" name="shipping_cost"
                                     style="background-color:#FAFAFA;" value="{{$product->shipping_cost}}">
                             </div>
                         </div>
@@ -200,15 +200,17 @@ Dropzone.options.images = {
             // var content = tinyMCE.activeEditor.getContent();
             // console.log(content);
             // console.log(content);
-            e.preventDefault();
-            e.stopPropagation();
+            
             //dzClosure.processQueue();
             // images are optional
-             if (dzClosure.getQueuedFiles().length > 0) {
-                dzClosure.processQueue();
-            } else {
-                // submit form
+            console.log(dzClosure.getQueuedFiles().length);
+             if (dzClosure.getQueuedFiles().length == 0) {
+                //dzClosure.processQueue();
                 $('#product_form').submit();
+            } else {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dzClosure.processQueue();
             }
         });
         //send all the form data along with the files:
@@ -223,8 +225,13 @@ Dropzone.options.images = {
             formData.append("brand", $('#brand').val());
             formData.append("price", $('#price').val());
             formData.append("quantity", $('#quantity').val());
-            formData.append("shipping_cost", $('#shiping_cost').val());
-            formData.append("delete_images[]", $('#delete_images').val());
+            formData.append("shipping_cost", $('#shipping_cost').val());
+            //get delete images checked value
+            var delete_images = [];
+            $("input[name='delete_images[]']:checked").each(function() {
+                delete_images.push($(this).val());
+            });
+            formData.append("delete_images", delete_images);
         });
         //after sucess
         this.on("successmultiple", function(files, response) {

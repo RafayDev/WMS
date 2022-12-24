@@ -102,7 +102,7 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->brand = $request->brand;
         $product->shipping_cost = $request->shipping_cost;
-        $product->description = $request->description;
+        $product->description = $request->content;
         $product->save();
         return redirect()->back()->with('success', 'Product updated successfully.');
     }
