@@ -18,7 +18,7 @@
                     <a class="dropdown-item" href="/add-product">
                         Add Products
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a class="dropdown-item" href="/list-products">
                         Listed Products
                   </a>
                </div>
