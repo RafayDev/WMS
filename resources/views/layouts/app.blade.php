@@ -57,6 +57,16 @@
         //     }
         // });
     </script>
+        <!-- jQuery Is Required -->
+    <script src="{{asset('frontend/resize_table/dist/jquery.slim.min.js')}}"></script>
+    <script src="{{asset('frontend\live_search\livesearch.js')}}"></script>
+    <script src="{{asset('frontend/js/search.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.css"/>
+ 
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.js"></script>
+    <!-- jQuery resizable-columns -->
+    <link rel="stylesheet" href="{{asset('frontend\resize_table\dist\jquery.resizableColumns.css')}}" />
+    <script src="{{asset('frontend/resize_table/dist/jquery.resizableColumns.min.js')}}"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">

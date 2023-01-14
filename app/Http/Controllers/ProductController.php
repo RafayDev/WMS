@@ -47,7 +47,7 @@ class ProductController extends Controller
     }
     public function list_product()
     {
-        $products = Product::paginate(15);
+        $products = Product::all();
         return view('list_products', compact('products'));
     }
     public function delete_product(Request $request)

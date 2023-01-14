@@ -87,6 +87,27 @@
                                 <h1>
                         </div>
                     </div>
+                    <div class="border-top my-3"></div>
+                    <!-- images from server -->
+                    <div class='row mt-3'>
+                        <div class='col-md-12'>
+                            <div class="form-group">
+                                <label for="images" class="mb-3"><b>Check to Delete Images</b></label>
+                                <div class="row">
+                                    @foreach($product->images as $image)
+                                    <div class="col-md-2">
+                                        <!-- cheack to delete images with show image -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="{{$image->id}}"
+                                                id="delete_images" name="delete_images[]">
+                                            <div class="zoom"><img src="{{asset('images/'.$image->path)}}" alt="" class="img-fluid"></div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -137,27 +158,7 @@
                         </div>
                         <div class='col-md-9'></div>
                     </div>
-                    <div class="border-top my-3"></div>
-                    <!-- images from server -->
-                    <div class='row mt-3'>
-                        <div class='col-md-12'>
-                            <div class="form-group">
-                                <label for="images" class="mb-3"><b>Check to Delete Images</b></label>
-                                <div class="row">
-                                    @foreach($product->images as $image)
-                                    <div class="col-md-2">
-                                        <!-- cheack to delete images with show image -->
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="{{$image->id}}"
-                                                id="delete_images" name="delete_images[]">
-                                            <div class="zoom"><img src="{{asset('images/'.$image->path)}}" alt="" class="img-fluid"></div>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div class="border-top my-3"></div>
                     <label for="description" class='mt-2'><b>Description:</b></label>

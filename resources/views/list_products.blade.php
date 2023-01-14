@@ -16,30 +16,30 @@
             <!-- search box -->
             <form action="/search" method="GET">
                 <div class="input-group">
-                    <input type="search" name="search" class="form-control" placeholder="Search your Product Here">
+                    <input type="search" name="search" id="livesearch" class="form-control" placeholder="Search your Product Here">
                     <span class="input-group-prepend">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        <a href="#" class="btn btn-primary"><i class="fa fa-search"></i></a>
                     </span>
                 </div>
             </form>
         </div>
         <div class='col-md-12 mt-5'>
-            <table class="table table-hover">
+        <table id="product" class="table table-bordered table-striped" data-resizable-columns-id="demo-table-v2"  style="width:100%">
                 <thead class="text-center">
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Product Id</th>
-                        <th scope="col">Product Title</th>
-                        <th scope="col">SKU</th>
-                        <th scope="col">UPC</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Brand</th>
-                        <th scope="col">Condition</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Shipping Cost</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Action</th>
+                        <th data-resizable-column-id="#">#</th>
+                        <th data-resizable-column-id="image">Image</th>
+                        <th data-resizable-column-id="product_id">Product Id</th>
+                        <th data-resizable-column-id="product_title" style="width:2000px;">Product Title</th>
+                        <th data-resizable-column-id="sku">SKU</th>
+                        <th data-resizable-column-id="upc">UPC</th>
+                        <th data-resizable-column-id="category">Category</th>
+                        <th data-resizable-column-id="brand">Brand</th>
+                        <th data-resizable-column-id="condition">Condition</th>
+                        <th data-resizable-column-id="price">Price</th>
+                        <th data-resizable-column-id="shippring_cost">Shipping Cost</th>
+                        <th data-resizable-column-id="quantity">Quantity</th>
+                        <th data-resizable-column-id="action" data-noresize>Action</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
@@ -82,9 +82,6 @@
                 </tbody>
             </table>
             <!-- //paginate the link -->
-            <div class="d-flex justify-content-center">
-                {{$products->links()}}
-            </div>
         </div>
     </div>
 </div>
@@ -117,6 +114,45 @@
     @endsection
     @section('script')
     <script>
+        $(document).ready(function(){
+
+$('input#livesearch').liveSearch({
+  table : 'table' // table selector
+});
+
+});
+  //assending and desending order in table
+        $(document).ready(function () {
+            $('th').click(function () {
+                var table = $(this).parents('table').eq(0)
+                var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+                this.asc = !this.asc
+                if (!this.asc) { rows = rows.reverse() }
+                for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
+            })
+        })
+        function comparer(index) {
+            return function (a, b) {
+                var valA = getCellValue(a, index), valB = getCellValue(b, index)
+                return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+            }
+        }
+        function getCellValue(row, index) { return $(row).children('td').eq(index).text() }
+        //live search in table 
+        // $(document).ready(function () {
+            
+            
+        //     $("#search").on("keyup", function () {
+        //         var value = $(this).val().toLowerCase();
+        //         $("#product tr").filter(function () {
+        //             //always show the first row
+        //             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //         });
+        //     });
+        // });
+
+        //delete product
+
         $(document).ready(function () {
             $('#action').change(function () {
                 var action = $(this).val();
@@ -134,5 +170,11 @@
         $('#cancel').click(function () {
             $('#action').val('');
         });
-    </script>
+        $(function(){
+      $("table").resizableColumns({
+        store: window.store
+      });
+    });
+
+</script>
     @endsection
