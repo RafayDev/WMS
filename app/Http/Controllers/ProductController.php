@@ -50,9 +50,9 @@ class ProductController extends Controller
         $products = Product::all();
         return view('list_products', compact('products'));
     }
-    public function delete_product(Request $request)
+    public function delete_product($id)
     {
-        $product_id = $request->product_id;
+        $product_id = $id;
         $product = Product::find($product_id);
         $product->delete();
         return redirect()->back()->with('error', 'Product deleted successfully.');

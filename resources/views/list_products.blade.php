@@ -64,11 +64,23 @@
                         <td>{{$product->shipping_cost}}</td>
                         <td>{{$product->quantity}}</td>
                         <td>
-                            <select name="action" id="action" style="border: 1px solid #fff; background-color: transparent; width: 100px;">
+                            <!-- <select name="action" id="action" style="border: 1px solid #fff; background-color: transparent; width: 100px;">
                                 <option value="" hidden>Edit</option>
                                 <option value="update" data-product-id="{{$product->id}}">Update</option>
                                 <option value="delete" data-product-id="{{$product->id}}">Delete</option>
-                            </select>
+                            </select> -->
+                            <div class="btn-group">
+  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    Edit
+  </button>
+  <ul class="dropdown-menu" style="min-width: 70px;">
+    <li><a class="dropdown-item" href="/edit-product/{{$product->id}}">Update</a></li>
+    <li> <button class="dropdown-item delete-product"
+                                                data-delete-product-id="{{ $product->id }}" data-bs-toggle="modal"
+                                                data-bs-target="#deletefilemodal">Delete
+                                            </button></li>
+  </ul>
+</div>
                             <!-- <a href="/edit-product/{{$product->id}}" class="btn btn-outline-primary btn-sm"><i class="fa fa-pencil"></i></a>
                             <a href="/delete-product/{{$product->id}}" class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i></a> -->
                         </td>
@@ -85,35 +97,41 @@
         </div>
     </div>
 </div>
-<!-- delete waring model -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Delete Product</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <!-- Modal delete -->
+        <div class="modal fade" id="deletefilemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete File</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            <p>Are you Sure to delete this Product?</p>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a class="btn btn-danger" href="" role="button" id="modaldeletecontract">Delete</a>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <form action="/delete-product" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <input type="hidden" name="product_id" id="product_id" value="">
-                    <p>Are you sure you want to delete this product?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel">Cancel</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
     @endsection
     @section('script')
     <script>
+            $('.delete-product').click(function(e) {
+        $('#modaldeletecontract').attr('href', '/delete-product/' + $(this).attr('data-delete-product-id'));
+    });
         $(document).ready(function(){
 
 $('input#livesearch').liveSearch({
